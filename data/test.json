@@ -1,0 +1,12 @@
+{
+    "revenues": [
+        {
+            "type": "revenue",
+            "category": "investment",
+            "amount": 10000.0,
+            "note": ""
+        }
+    ],
+    "expenses": [],
+    "tasks": []
+}

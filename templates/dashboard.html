@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KyroX Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <h2>
+    Welcome {{ session.username }} 
+    <span style="background: #00ffff; color:black; padding:5px 10px; border-radius:10px;">
+        {{ session.plan | upper }} PLAN
+    </span>
+</h2>
+    <style>
+        
+        .chart-box {
+    width: 750px;
+    margin: 50px auto;
+    padding: 35px;
+    border-radius: 30px;
+
+    background: linear-gradient(145deg, #0f172a, #111827);
+
+    box-shadow:
+        0 0 40px rgba(0,255,255,0.25),
+        inset 0 0 30px rgba(0,255,255,0.08);
+
+    transition: all 0.4s ease;
+}
+
+.chart-box:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 0 80px rgba(0,255,255,0.4),
+        inset 0 0 40px rgba(0,255,255,0.15);
+}
+          body {
+            margin: 0;
+            background: radial-gradient(circle at top, #0a0a18, #000000 70%);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .header {
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+    
+         .insight-box {
+    width: 750px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #0f172a, #111827);
+    box-shadow:
+        0 0 30px rgba(0,255,255,0.2),
+        inset 0 0 20px rgba(0,255,255,0.05);
+    transition: 0.3s ease;
+}
+
+.insight-box:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 0 50px rgba(0,255,255,0.4);
+}
+        .container {
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .value {
+            font-size: 28px;
+            margin-top: 10px;
+        }
+
+        .profit { color: #22c55e; }
+        .expense { color: #ef4444; }
+
+        .form-section {
+            background: #1e293b;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 400px;
+        }
+           
+        #particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #3b82f6;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+       body.light-mode {
+    background: #f4f6f9;
+    color: #111;
+}
+
+body.light-mode .card {
+    background: white;
+    color: #111;
+}
+
+body.light-mode .insight-box {
+    background: #ffffff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+body.light-mode header {
+    background: #ffffff;
+    color: #111;
+}
+      <style>
+#chat-container {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>  
+      </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+<script>
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 60 },
+    color: { value: "#00ffff" },
+    shape: { type: "circle" },
+    opacity: { value: 0.3 },
+    size: { value: 3 },
+    move: { speed: 1 }
+  }
+});
+</script>
+
+<body>
+<div class="header" style="
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    backdrop-filter: blur(10px);
+    background: rgba(30, 41, 59, 0.9);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+">
+
+    <!-- Left side -->
+    <div>
+        <div style="font-size: 22px; font-weight: bold;">
+            🚀 KyroX SaaS Dashboard
+        </div>
+        <div style="font-size: 13px; opacity: 0.7;">
+            Welcome, {{ session.username }}
+        </div>
+    </div>
+
+    <!-- Right side -->
+    <div style="display: flex; align-items: center; gap: 15px;">
+        
+        {% if session.plan == "pro" %}
+<span style="
+    background: linear-gradient(135deg, #facc15, #f59e0b);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: black;
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+">
+    👑 Pro Plan
+</span>
+{% else %}
+<span style="
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+">
+    Free Plan
+</span>
+{% endif %}
+        {% if session.plan == "free" %}
+        <a href="/upgrade" style="text-decoration: none;">
+            <button style="
+                width: auto;
+                padding: 8px 16px;
+                background: #22c55e;
+                border-radius: 8px;
+            ">
+                Upgrade
+            </button>
+        </a>
+        {% endif %}
+
+<button
+    style="margin-right:10px; padding:8px 15px; border:none;
+    border-radius:20px; cursor:pointer;"
+    id="themeToggle">
+    🌙 Dark
+</button> 
+        <a href="/logout" style="text-decoration: none;">
+            <button style="
+                width: auto;
+                padding: 8px 16px;
+                background: #ef4444;
+                border-radius: 8px;
+            ">
+                Logout
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="card">
+        <h3>Total Revenue</h3>
+       <h2 id="revenue">₹{{ "%.0f"|format(data.revenue) }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Total Expense</h3>
+        <h2 id="expense">₹{{ "%.0f"|format(data.expense) }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Net Profit</h3>
+        <h2 id="profit">₹{{ "%.0f"|format(data.profit) }}</h2>
+    </div>
+</div>
+
+<div class="insight-box">
+    <h3 style="color: #00ffff;">🤖 KyroX AI Business Insight</h3>
+    <p style="font-size: 16px; margin-top: 10px;">{{ data.insight }}</p>
+    <p style="margin-top: 8px; opacity: 0.8;">Profit Margin: {{ data.profit_margin }}%</p>
+</div>
+
+<div class="chart-box">
+    <canvas id="financeChart"></canvas>
+</div>
+
+
+<div class="form-section">
+    <h3>Add Transaction</h3>
+    <form method="POST" action="/add">
+        <select name="type">
+            <option value="revenue">Revenue</option>
+            <option value="expense">Expense</option>
+        </select>
+
+        <input type="text" name="category" placeholder="Category" required>
+        <input type="number" step="0.01" name="amount" placeholder="Amount" required>
+        <input type="text" name="note" placeholder="Note">
+
+        <button type="submit">Add Entry</button>
+    </form>
+</div>
+
+{% if session.plan == "pro" %}
+<h3>🧠 KyroX Advanced AI Analysis</h3>
+{% else %}
+<h3>AI Insight</h3>
+{% endif %}
+
+<script>
+const ctx = document.getElementById('financeChart').getContext('2d');
+
+// Neon gradients
+const gradientRevenue = ctx.createLinearGradient(0, 0, 0, 400);
+gradientRevenue.addColorStop(0, "#00ffff");
+gradientRevenue.addColorStop(1, "#0066ff");
+
+const gradientExpense = ctx.createLinearGradient(0, 0, 0, 400);
+gradientExpense.addColorStop(0, "#ff00ff");
+gradientExpense.addColorStop(1, "#ff0040");
+
+const gradientProfit = ctx.createLinearGradient(0, 0, 0, 400);
+gradientProfit.addColorStop(0, "#00ff88");
+gradientProfit.addColorStop(1, "#00ffaa");
+
+const financeChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Revenue', 'Expense', 'Profit'],
+        datasets: [{
+            label: 'AI Financial Matrix',
+            data: [{{ data.revenue }}, {{ data.expense }}, {{ data.profit }}],
+            backgroundColor: [
+                gradientRevenue,
+                gradientExpense,
+                gradientProfit
+            ],
+            borderRadius: 18,
+            borderSkipped: false
+        }]
+    },
+    options: {
+        responsive: true,
+        animation: {
+            duration: 2000,
+            easing: 'easeOutExpo'
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: "#00ffff",
+                    font: {
+                        size: 14,
+                        weight: 'bold'
+                    }
+                }
+            },
+            tooltip: {
+                backgroundColor: "#111",
+                titleColor: "#00ffff",
+                bodyColor: "#ffffff",
+                borderColor: "#00ffff",
+                borderWidth: 1
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: "rgba(0,255,255,0.1)"
+                },
+                ticks: {
+                    color: "#00ffff"
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    color: "#00ffff"
+                }
+            }
+        }
+    }
+});
+</script>
+{% if session.plan == "free" %}
+    <a href="/upgrade" style="color:#00ffff;">Upgrade to Pro</a>
+{% else %}
+    <p>🚀 You are a Pro member!</p>
+{% endif %}
+<script>
+function animateValue(id, start, end, duration) {
+    let obj = document.getElementById(id);
+    let range = end - start;
+    let current = start;
+    let increment = end > start ? 1 : -1;
+    let stepTime = Math.abs(Math.floor(duration / range));
+    
+    let timer = setInterval(function() {
+        current += increment;
+        obj.innerHTML = "₹ " + current.toFixed(0);
+        if (current == end) {
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Animate numbers
+    animateValue("revenue", 0, {{ data.revenue|int }}, 1000);
+    animateValue("expense", 0, {{ data.expense|int }}, 1000);
+    animateValue("profit", 0, {{ data.profit|int }}, 1000);
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme");
+    const button = document.getElementById("themeToggle");
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+        button.innerHTML = "☀️ Light";
+    }
+
+    // Toggle theme
+    button.addEventListener("click", function() {
+        document.body.classList.toggle("light-mode");
+
+        if (document.body.classList.contains("light-mode")) {
+            button.innerHTML = "☀️ Light";
+            localStorage.setItem("theme", "light");
+        } else {
+            button.innerHTML = "🌙 Dark";
+            localStorage.setItem("theme", "dark");
+        }
+    });
+
+});
+</script>
+
+<h2>Revenue Overview</h2>
+<canvas id="revenueChart" width="400" height="200"></canvas>
+<canvas id="revenueChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+
+new Chart(revenueCtx, {
+    type: 'line',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Revenue',
+            data: [100, 200, 150, 300, 250, 400, 350],
+            borderColor: 'blue',
+            backgroundColor: 'rgba(0, 0, 255, 0.1)',
+            tension: 0.3,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+</script>
+<button onclick="toggleChat()" id="chat-toggle"
+style="
+position: fixed;
+bottom: 20px;
+right: 20px;
+width: 60px;
+height: 60px;
+border-radius: 50%;
+border: none;
+background: #00ffff;
+font-size: 24px;
+cursor: pointer;
+z-index: 1000;">
+🤖
+</button>
+<div id="chat-container"
+style="
+display: none;
+position: fixed;
+bottom: 90px;
+right: 20px;
+width: 300px;
+height: 350px;
+background: #0f172a;
+color: white;
+padding: 15px;
+border-radius: 15px;
+box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+z-index: 1000;
+">
+
+<div style="display:flex; justify-content:space-between;">
+<b>KyroX AI</b>
+<span style="cursor:pointer;" onclick="toggleChat()">❌</span>
+</div>
+
+<div id="chat-box"
+style="height:200px; overflow-y:auto; margin:10px 0; font-size:14px;">
+</div>
+
+<input type="text" id="chat-input"
+placeholder="Ask KyroX..."
+style="width:100%; padding:6px; border-radius:6px; border:none;">
+
+<button onclick="sendMessage()"
+style="margin-top:6px; width:100%; padding:6px; border:none; border-radius:6px; background:#3b82f6; color:white;">
+Send
+</button>
+
+</div>
+<script>
+function toggleChat() {
+    const chat = document.getElementById("chat-container");
+    chat.style.display = (chat.style.display === "block") ? "none" : "block";
+}
+
+function sendMessage() {
+    let input = document.getElementById("chat-input");
+    let message = input.value;
+
+    if (!message.trim()) return;
+
+    fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        let chatBox = document.getElementById("chat-box");
+        chatBox.innerHTML += "<div><b>You:</b> " + message + "</div>";
+        chatBox.innerHTML += "<div><b>AI:</b> " + data.reply + "</div>";
+        input.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+}
+
+document.getElementById("chat-input").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        sendMessage();
+    }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const body = document.body;
+    const button = document.getElementById("themeToggle");
+
+    // Load saved theme on page load
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") {
+        body.classList.add("light-mode");
+        button.innerHTML = "☀️ Light";
+    } else {
+        button.innerHTML = "🌙 Dark";
+    }
+
+    // Toggle theme when button clicked
+    button.addEventListener("click", function () {
+        body.classList.toggle("light-mode");
+
+        if (body.classList.contains("light-mode")) {
+            button.innerHTML = "☀️ Light";
+            localStorage.setItem("theme", "light");
+        } else {
+            button.innerHTML = "🌙 Dark";
+            localStorage.setItem("theme", "dark");
+        }
+    });
+
+});
+</script>
+</body>
+</html>

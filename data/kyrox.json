@@ -1,0 +1,19 @@
+{
+    "revenues": [
+        {
+            "category": "investment",
+            "amount": 10000.0,
+            "note": "",
+            "timestamp": "2026-02-23 16:20:08"
+        }
+    ],
+    "expenses": [
+        {
+            "category": "car",
+            "amount": 7000.0,
+            "note": "",
+            "timestamp": "2026-02-23 16:20:25"
+        }
+    ],
+    "tasks": []
+}

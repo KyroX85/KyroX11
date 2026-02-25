@@ -1,0 +1,55 @@
+{
+    "revenues": [
+        {
+            "category": "test",
+            "amount": 500.0,
+            "note": "first_test",
+            "timestamp": "2026-02-21 11:57:35"
+        },
+        {
+            "category": "investment",
+            "amount": 10000.0,
+            "note": "",
+            "timestamp": "2026-02-22 09:17:57"
+        },
+        {
+            "category": "investment",
+            "amount": 10000.0,
+            "note": "",
+            "timestamp": "2026-02-22 09:20:53"
+        },
+        {
+            "category": "investment",
+            "amount": 1000000000000000.0,
+            "note": "",
+            "timestamp": "2026-02-22 10:44:45"
+        },
+        {
+            "category": "sales",
+            "amount": 1000.0,
+            "note": "first sale",
+            "timestamp": "2026-02-23 16:01:26"
+        }
+    ],
+    "expenses": [
+        {
+            "category": "car",
+            "amount": 500.0,
+            "note": "",
+            "timestamp": "2026-02-22 09:18:33"
+        },
+        {
+            "category": "investment",
+            "amount": 5000000.0,
+            "note": "",
+            "timestamp": "2026-02-22 09:20:28"
+        },
+        {
+            "category": "car",
+            "amount": 200.0,
+            "note": "ads",
+            "timestamp": "2026-02-23 16:02:06"
+        }
+    ],
+    "tasks": []
+}
