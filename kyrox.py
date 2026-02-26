@@ -10,6 +10,8 @@ from pathlib import Path
 import sqlite3
 import json
 import os
+from flask import Flask
+
 
 # ==============================
 # CONFIG
@@ -17,8 +19,7 @@ import os
 
 
 app = Flask(__name__)
-app.secret_key = os.urandom(32)  # ✅ Secure secret key
-
+app.secret_key = os.environ.get("SECRET_KEY", os.urandom(32))
 
 # ==============================
 # DATABASE INIT
